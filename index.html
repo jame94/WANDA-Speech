@@ -16,6 +16,9 @@
     <!-- Importing Custom Elements -->
     <link rel="import" href="src/voice-player.html">
     <link rel="import" href="src/voice-recognition.html">
+      
+    <script src="//www.google.com/js/gweb/analytics/autotrack.js"></script>
+      
   </head>
 
   <body>
@@ -81,6 +84,20 @@
                     });
                 });
             </script>
+          
+            <script>
+            var recognizer = new SpeechRecognition();
+                recognizer.continuous = true;
+                recognizer.interimResults = true;
+                recognizer.onresult = function(e) {
+                  if (e.results.length) {
+                    var lastResultIdx = e.results.resultIndex;
+                    console.log(e.results[lastResultIdx][0].transcript);
+                  }
+                };
+                recognizer.start();
+            </script>
+
 
                 <div class="example">
                     <form id="recognition-form">
@@ -95,7 +112,11 @@
           </div>
     </div>
             
-
+<div class="right">
+  <button id="start_button" onclick="startButton(event)">
+    <img id="start_img" src="mic.gif" alt="Start"></button>
+</div>
+    
 <div id="results">
   <span id="final_span" class="final"></span>
   <span id="interim_span" class="interim"></span>
@@ -191,7 +212,6 @@ var final_transcript = '';
 var recognizing = false;
 var ignore_onend;
 var start_timestamp;
-    
 if (!('webkitSpeechRecognition' in window)) {
   upgrade();
 } else {
@@ -359,6 +379,7 @@ function showButtons(style) {
   email_info.style.display = 'none';
 }
 </script>
+    
 
     
     <!-- Browser - Support -->
