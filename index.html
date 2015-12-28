@@ -31,7 +31,7 @@
 
       
       <div id="container">
-          <h1> Hallo, ich bin Wanda!</h1>
+          <h1>Wanda</h1>
           
             <!-- Sprachausgabe -->
             <voice-player accent="de-DE" id="player-element" text=""></voice-player>
@@ -67,13 +67,10 @@
             <!-- Google Speech API - HTML -->
             <h1 class="center" id="headline">Spracherkennung</h1>
             <button id="start_button" class="button" onclick="startButton(event)">Aufnahme starten/stoppen</button>
-            <div id="info">
-            </div> 
-            
+
             <div id="results">
-              <span id="final_span" class="final"></span>
+              <span id="final_span" class="final">Hier entsteht Text.</span>
               <span id="interim_span" class="interim"></span>
-              <p>
             </div>
             <div class="center">
               <div id="div_language">
@@ -81,8 +78,58 @@
                 &nbsp;&nbsp;
                 <select id="select_dialect"></select>
               </div> 
-            </div> 
+            </div>
+          
+         <!-- RobertAPI -->
+          <script type="text/javascript">
+
+            var speak = document.getElementById('player-element')
+
+            var speech = new Speech({
+                debugging: true,
+                continuous: true,
+                interimResults: true,
+                autoRestart: true
+            })
+
+                speech.on('start', function () {
+                    speak.innerHTML = ''
+                })
+                speech.on('end', function () {
+                    speak.innerHTML = ''
+                })
+                speech.on('interimResult', function (msg) {
+                    var spokenText = msg
+                    NeuerText.innerHTML = msg
+                    if(spokenText.includes('Hallo')){
+                        speak.innerHTML = 'Hallo Tim. Wie geht es Dir?'
+                        recognition.stop();
+                    } else{
+                        text.innerHTML = 'Ich habe Dich leider nicht verstanden.'
+                    }
+                })
+                speech.on('finalResult', function (msg) {
+                    var spokenText = msg
+                    gesprochenerText.innerHTML = msg
+                    if(spokenText.includes('Hallo')){
+                        recognition.stop();
+                        speak.innerHTML = 'Hallo Tim. Wie geht es Dir?'
+                    } else{
+                        speak.innerHTML = 'Ich habe Dich leider nicht verstanden.'
+                    }
+                })
+                speech.start()
+
+        </script>
+          
+          
+        </div>
+    </div>
             
+    
+    
+           
+    
     <!-- Google Speech API -->
     <script src="js/googleSpeech.js"></script>
     
