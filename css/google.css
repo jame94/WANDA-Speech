@@ -10,19 +10,17 @@
   }
   .button {
     background: grey;
-    border-radius: 2px;
     color: white;
     display: inline-block;
-    font-size: 13px;
+    font-size: .5em;
     font-weight: bold;
-    line-height: 1.3;
-    padding: 8px 25px;
+    padding: .2em 2em;
     text-align: center;
-    letter-spacing: normal;
   }
   .center {
     padding: 10px;
     text-align: center;
+    display: none;
   }
   .final {
     color: black;
