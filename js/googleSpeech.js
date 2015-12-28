@@ -62,27 +62,8 @@ var langs =
  ['日本語',           ['ja-JP']],
  ['Lingua latīna',   ['la']]];
 
-/*for (var i = 0; i < langs.length; i++) {
-  select_language.options[i] = new Option(langs[i][0], i);
-} */
 select_language.selectedIndex = 5;
-/* updateCountry();
-select_dialect.selectedIndex = 5;
-showInfo('info_start');
 
-function updateCountry() {
-  for (var i = select_dialect.options.length - 1; i >= 0; i--) {
-    select_dialect.remove(i);
-  }
-  var list = langs[select_language.selectedIndex];
-  for (var i = 1; i < list.length; i++) {
-    select_dialect.options.add(new Option(list[i][1], list[i][0]));
-  }
-  select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
-} 
-*/
-
-// var create_email = false;
 var final_transcript = '';
 var recognizing = false;
 var ignore_onend;
@@ -127,11 +108,6 @@ if (!('webkitSpeechRecognition' in window)) {
     if (ignore_onend) {
       return;
     }
-  /*start_img.src = 'mic.gif';
-    if (!final_transcript) {
-      showInfo('info_start');
-      return;
-    }*/
 
     showInfo('');
     if (window.getSelection) {
@@ -200,18 +176,6 @@ function copyButton() {
   showInfo('');
 }
 
-/* function emailButton() {
-  if (recognizing) {
-    create_email = true;
-    recognizing = false;
-    recognition.stop();
-  } else {
-    createEmail();
-  }
-  email_button.style.display = 'none';
-  email_info.style.display = 'inline-block';
-  showInfo('');
-} */
 
 function startButton(event) {
   if (recognizing) {
