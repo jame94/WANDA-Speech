@@ -1,12 +1,13 @@
-
+* {
+    font-family: 'Montserrat', sans-serif;  
+}
 
 body {
     width: 100%;
     height: auto;
     background-color: #E5F2FF;
-    font-family: 'Montserrat', sans-serif;
     font-size: 1.5em;
-    line-height: 1.75em;
+    line-height: 1.4em;
     color: #1c1d1d;
 }
 
