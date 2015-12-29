@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Importing Web Component's Polyfill -->
+    <!-- Web Component's for Speaking Wanda-->
     <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
     <!-- Importing Custom Elements -->
@@ -18,6 +18,7 @@
     <link rel="import" href="src/voice-recognition.html">
       
     <script src="//www.google.com/js/gweb/analytics/autotrack.js"></script>
+    <!--<script src="js/speech.js"></script>-->
       
   </head>
 
@@ -81,9 +82,9 @@
             </div>
           
          <!-- RobertAPI -->
-          <script type="text/javascript">
+          <!--<script type="text/javascript">
 
-            var speak = document.getElementById('player-element')
+            var text = document.getElementById('final_span')
 
             var speech = new Speech({
                 debugging: true,
@@ -92,44 +93,25 @@
                 autoRestart: true
             })
 
-                speech.on('start', function () {
-                    speak.innerHTML = ''
+            speech
+                .on('start', function () {
+                    text.innerHTML = 'Come on, talk to me.'
                 })
-                speech.on('end', function () {
-                    speak.innerHTML = ''
+                .on('end', function () {
+                    text.innerHTML = 'Stopped listening.'
                 })
-                speech.on('interimResult', function (msg) {
-                    var spokenText = msg
-                    NeuerText.innerHTML = msg
-                    if(spokenText.includes('Hallo')){
-                        speak.innerHTML = 'Hallo Tim. Wie geht es Dir?'
-                        recognition.stop();
-                    } else{
-                        text.innerHTML = 'Ich habe Dich leider nicht verstanden.'
-                    }
+                .on('interimResult', function (msg) {
+                    text.innerHTML = msg
                 })
-                speech.on('finalResult', function (msg) {
-                    var spokenText = msg
-                    gesprochenerText.innerHTML = msg
-                    if(spokenText.includes('Hallo')){
-                        recognition.stop();
-                        speak.innerHTML = 'Hallo Tim. Wie geht es Dir?'
-                    } else{
-                        speak.innerHTML = 'Ich habe Dich leider nicht verstanden.'
-                    }
+                .on('finalResult', function (msg) {
+                    text.innerHTML = msg
                 })
-                speech.start()
+                .start()
 
-        </script>
-          
-          
+        </script>-->  
         </div>
     </div>
             
-    
-    
-           
-    
     <!-- Google Speech API -->
     <script src="js/googleSpeech.js"></script>
     
