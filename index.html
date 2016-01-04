@@ -1,122 +1,155 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Wanda</title>
-    <!-- IMPORT FONTS -->
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Web Component's for Speaking Wanda-->
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-
-    <!-- Importing Custom Elements -->
-    <link rel="import" href="src/voice-player.html">
-    <link rel="import" href="src/voice-recognition.html">
-      
-    <script src="//www.google.com/js/gweb/analytics/autotrack.js"></script>
-    <!--<script src="js/speech.js"></script>-->
-      
-  </head>
-
-  <body>
-    <div id="wrapper">
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="speech.js"></script>
         
-      <!-- Support Warning -->
-      <div class="brower-support">
-          <p>Es tut uns leid, Du benötigst  <a href="https://www.google.de/chrome/browser/desktop/"> Chrome </a> um <h1>Wanda</h1> zu aktivieren.</p>
-      </div>
+        <!-- Web Component's for Speaking Wanda-->
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
-      
-      <div id="container">
-          <h1>Wanda</h1>
-          
-            <!-- Sprachausgabe -->
-            <voice-player accent="de-DE" id="player-element" text=""></voice-player>
-                
-            <script>
-                window.addEventListener('WebComponentsReady', function(e) {
-                    var form = document.querySelector('#player-form'),
-                        input = document.querySelector('#player-input'),
-                        element = document.querySelector('#player-element');
+        <!-- Importing Custom Elements -->
+        <link rel="import" href="src/voice-player.html">
+        <link rel="import" href="src/voice-recognition.html">
+        
+        <style>
+            * {
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+                font-size: 4vh;
+                letter-spacing: -.1vh;
+            }
+            body {
+                width: 100%;
+                heigt: auto;
+            }
+             
+            #wrapper {
+                position:absolute; 
+                width: 70%;
+                top: 35vh;
+                left: 15%; 
+                margin: 0 auto;
+                text-align: center;
+            }
+            
+            #text {
+                text-align: center;
+                font-size: 8vh;
+                font-weight: bold;
+                color: #454545;
+            }
+            
+            .example {
+                top: 3vh;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div id="wrapper">
+             <div id="content">
+                <h2 id="recognition">…</h2> <!-- Listen and show text from user -->
+                 <form id="textToSpeech"> </form> <!-- Get words by JavaScript -->
+                        <voice-player id="player-element" text=""></voice-player>
+                            <script>
+                                window.addEventListener('WebComponentsReady', function(e) {
+                                    var form = document.querySelector('#player-form'),
+                                        input = document.querySelector('#player-input'),
+                                        element = document.querySelector('#player-element');
 
-                    element.setAttribute('text', input.value);
+                                    element.setAttribute('text', input.value);
 
-                    input.addEventListener('input', function(e) {
-                        element.setAttribute('text', input.value);
-                    });
+                                    input.addEventListener('input', function(e) {
+                                        element.setAttribute('text', input.value);
+                                    });
 
-                    form.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        element.speak();
-                    });
-                });
-            </script>
+                                    form.addEventListener('submit', function(e) {
+                                        e.preventDefault();
+                                        element.speak();
+                                    });
+                                });
+                            </script>
 
                 <div class="example">
                     <form id="player-form" class="pure-form">
                         <fieldset>
-                            <input id="player-input" type="text" value="Text eingeben">
+                            <input id="player-input" type="text" value="">
+                            <script>
+                                var element           = document.getElementById("player-input");
+                                var neuesAttribut2    = document.createAttribute("text");
+                                neuesAttribut2.value  = document.getElementById("textToSpeech").value;
+                                element.attributes.setNamedItem( neuesAttribut2 );
+                                </script>
                             <button id="player-submit">Sprachausgabe</button>
                         </fieldset>
                     </form>
                 </div>
 
-            <!-- Google Speech API - HTML -->
-            <h1 class="center" id="headline">Spracherkennung</h1>
-            <button id="start_button" class="button" onclick="startButton(event)">Aufnahme starten/stoppen</button>
+                 
+                <!-- //  Hier ein Beispiel, wie du auf das Attribut text vom voice-player zugreifen kannst
+                                var element           = document.getElementById("myPlayer");
+                                var neuesAttribut     = document.createAttribute("text");
+                                neuesAttribut.value   = "Hier kann der Text hin, den du einfügen möchtest";
+                                element.attributes.setNamedItem( neuesAttribut );
 
-            <div id="results">
-              <span id="final_span" class="final">Hier entsteht Text.</span>
-              <span id="interim_span" class="interim"></span>
-            </div>
-            <div class="center">
-              <div id="div_language">
-                <select id="select_language" onchange="updateCountry()"></select>
-                &nbsp;&nbsp;
-                <select id="select_dialect"></select>
-              </div> 
-            </div>
-          
-         <!-- RobertAPI -->
-          <!--<script type="text/javascript">
+                                //  Du wolltest ja, dass der value von textToSpeech dann hier drin steht also Folgendes:
+                                var element           = document.getElementById("myPlayer");
+                                var neuesAttribut2    = document.createAttribute("text");
+                                neuesAttribut2.value  = document.getElementById("textToSpeech").value;
+                                element.attributes.setNamedItem( neuesAttribut2 );
+                                //  Achtung: Wenn du das Beispiel von hier direkt im Browser ausführst wird die Konsole
+                                //  die Fehlermeldung ausgeben: "Uncaught TypeError: Cannot read property 'value' of null"
+                                //  Das liegt daran vermutlich daran, dass textToSpeech ja noch leer ist aber ich vermute
+                                //  mal du hast es schon hinbekommen, da den gesprochenen Text einlesen zu lassen-->
 
-            var text = document.getElementById('final_span')
-
-            var speech = new Speech({
-                debugging: true,
-                continuous: true,
-                interimResults: true,
-                autoRestart: true
-            })
-
-            speech
-                .on('start', function () {
-                    text.innerHTML = 'Come on, talk to me.'
-                })
-                .on('end', function () {
-                    text.innerHTML = 'Stopped listening.'
-                })
-                .on('interimResult', function (msg) {
-                    text.innerHTML = msg
-                })
-                .on('finalResult', function (msg) {
-                    text.innerHTML = msg
-                })
-                .start()
-
-        </script>-->  
-        </div>
-    </div>
+                 
+       
+                 
+                <!-- SpeechRecognition and Answering -->
+                <script type="text/javascript">
             
-    <!-- Google Speech API -->
-    <script src="js/googleSpeech.js"></script>
-    
-    <!-- Browser - Support -->
-    <script src="js/support.js"></script>
-    
-  </body>
+                    var speak = document.getElementById('textToSpeech')
+
+                    var speech = new Speech({
+                        debugging: true,
+                        continuous: true,
+                        interimResults: true,
+                        autoRestart: true
+                    })
+
+                    speech
+                        .on('start', function () {
+                            speak.innerHTML = 'Bitte sprich mit mir'
+                        })
+                        .on('end', function () {
+                            speak.innerHTML = 'Ich bin noch nicht bereit'
+                        })
+                        .on('interimResult', function (msg) {
+                            var spokenText = msg
+                            recognition.innerHTML = msg
+                            if(spokenText.includes('Hallo')){
+                                speak.innerHTML = 'Hallo Tim, wie geht es Dir?'
+                                recognition.stop();
+
+                            } else{
+                                speak.innerHTML = 'Ich verstehe Dich nicht.'
+                            }
+                        })
+                        .on('finalResult', function (msg) {
+                            var spokenText = msg
+                            recognition.innerHTML = msg
+                            if(spokenText.includes('Hallo')){
+                                recognition.stop();
+                                speak.innerHTML = 'Hallo Tim, wie geht es Dir?'
+
+                            } else{
+                                speak.innerHTML = 'Ich verstehe Dich nicht.'
+                            }
+                        })
+                        .start()
+
+                </script>
+            </div>
+        </div>
+    </body>
 </html>
