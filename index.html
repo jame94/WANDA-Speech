@@ -129,7 +129,7 @@
                             recognition.innerHTML = msg
                             if(spokenText.includes('Hallo')){
                                 speak.innerHTML = 'Hallo Tim, wie geht es Dir?'
-                                recognition.stop();
+                                speech.stop();
 
                             } else{
                                 speak.innerHTML = 'Ich verstehe Dich nicht.'
@@ -139,7 +139,7 @@
                             var spokenText = msg
                             recognition.innerHTML = msg
                             if(spokenText.includes('Hallo')){
-                                recognition.stop();
+                                speech.stop();
                                 speak.innerHTML = 'Hallo Tim, wie geht es Dir?'
 
                             } else{
