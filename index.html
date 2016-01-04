@@ -137,14 +137,21 @@
                         })
                         .on('finalResult', function (msg) {
                             var spokenText = msg
+                            var response;
                             recognition.innerHTML = msg
+
                             if(spokenText.includes('Hallo')){
                                 recognition.stop();
-                                speak.innerHTML = 'Hallo Tim, wie geht es Dir?'
+                                response = 'Hallo Tim, wie geht es Dir?'
 
                             } else{
-                                speak.innerHTML = 'Ich verstehe Dich nicht.'
+                                response = 'Ich verstehe Dich nicht.'
                             }
+                            speak.innerHTML = response;
+
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
                         })
                         .start()
 
