@@ -48,68 +48,17 @@
     <body>
         <div id="wrapper">
              <div id="content">
-                <h2 id="recognition">…</h2> <!-- Listen and show text from user -->
+                <h2 id="speechToText">…</h2> <!-- Listen and show text from user -->
                  <form id="textToSpeech"> </form> <!-- Get words by JavaScript -->
                         <voice-player id="player-element" text=""></voice-player>
-                            <script>
-                                window.addEventListener('WebComponentsReady', function(e) {
-                                    var form = document.querySelector('#player-form'),
-                                        input = document.querySelector('#player-input'),
-                                        element = document.querySelector('#player-element');
-
-                                    element.setAttribute('text', input.value);
-
-                                    input.addEventListener('input', function(e) {
-                                        element.setAttribute('text', input.value);
-                                    });
-
-                                    form.addEventListener('submit', function(e) {
-                                        e.preventDefault();
-                                        element.speak();
-                                    });
-                                });
-                            </script>
-
-                <div class="example">
-                    <form id="player-form" class="pure-form">
-                        <fieldset>
-                            <input id="player-input" type="text" value="">
-                            <script>
-                                var element           = document.getElementById("player-input");
-                                var neuesAttribut2    = document.createAttribute("text");
-                                neuesAttribut2.value  = document.getElementById("textToSpeech").value;
-                                element.attributes.setNamedItem( neuesAttribut2 );
-                                </script>
-                            <button id="player-submit">Sprachausgabe</button>
-                        </fieldset>
-                    </form>
-                </div>
-
-                 
-                <!-- //  Hier ein Beispiel, wie du auf das Attribut text vom voice-player zugreifen kannst
-                                var element           = document.getElementById("myPlayer");
-                                var neuesAttribut     = document.createAttribute("text");
-                                neuesAttribut.value   = "Hier kann der Text hin, den du einfügen möchtest";
-                                element.attributes.setNamedItem( neuesAttribut );
-
-                                //  Du wolltest ja, dass der value von textToSpeech dann hier drin steht also Folgendes:
-                                var element           = document.getElementById("myPlayer");
-                                var neuesAttribut2    = document.createAttribute("text");
-                                neuesAttribut2.value  = document.getElementById("textToSpeech").value;
-                                element.attributes.setNamedItem( neuesAttribut2 );
-                                //  Achtung: Wenn du das Beispiel von hier direkt im Browser ausführst wird die Konsole
-                                //  die Fehlermeldung ausgeben: "Uncaught TypeError: Cannot read property 'value' of null"
-                                //  Das liegt daran vermutlich daran, dass textToSpeech ja noch leer ist aber ich vermute
-                                //  mal du hast es schon hinbekommen, da den gesprochenen Text einlesen zu lassen-->
-
-                 
-       
-                 
+                          
                 <!-- SpeechRecognition and Answering -->
                 <script type="text/javascript">
             
-                    var speak = document.getElementById('textToSpeech')
+                    (function(){
+ 
 
+                    var speak = document.getElementById('textToSpeech')
                     var speech = new Speech({
                         debugging: true,
                         continuous: true,
@@ -126,35 +75,34 @@
                         })
                         .on('interimResult', function (msg) {
                             var spokenText = msg
-                            recognition.innerHTML = msg
+                            speechToText.innerHTML = msg
                             if(spokenText.includes('Hallo')){
                                 speak.innerHTML = 'Hallo Tim, wie geht es Dir?'
-                                recognition.stop();
-
+                                speech.stop();
                             } else{
+                                speech.stop();
                                 speak.innerHTML = 'Ich verstehe Dich nicht.'
                             }
                         })
                         .on('finalResult', function (msg) {
                             var spokenText = msg
                             var response;
-                            recognition.innerHTML = msg
-
+                            speechToText.innerHTML = msg
                             if(spokenText.includes('Hallo')){
-                                recognition.stop();
+                                speech.stop();
                                 response = 'Hallo Tim, wie geht es Dir?'
-
                             } else{
+                                speech.stop();
                                 response = 'Ich verstehe Dich nicht.'
                             }
                             speak.innerHTML = response;
-
                             var player = document.querySelector('#player-element');
                             player.setAttribute('text', response);
                             player.speak();
                         })
-                        .start()
-
+                        .start();
+                    
+                    }());
                 </script>
             </div>
         </div>
