@@ -61,7 +61,11 @@
                         interimResults: true,
                         autoRestart: true
                     })
-                    
+                    /*var welcome = ["Hallo", "Hey", "Hi", "Servus", "Gude", "Grüßgott"];
+                        welcome.forEach(function(welcomeElement) { 
+                            return welcomeElement;
+                        });*/
+ 
                     speech
                         .on('start', function () {
                             speak.innerHTML = 'Bitte sprich mit mir'
@@ -74,9 +78,7 @@
                             speechToText.innerHTML = msg
                             if(spokenText.includes('Hallo')){
                                 speak.innerHTML = 'Hallo Tim, wie geht es Dir?'
-                                // speech.stop();
                             } else{
-                                // speech.stop();
                                 speak.innerHTML = 'Ich verstehe Dich nicht.'
                             }
                         })
@@ -84,11 +86,9 @@
                             var spokenText = msg
                             var response;
                             speechToText.innerHTML = msg
-                            if(spokenText.includes('Hallo')){
-                                // speech.stop();
+                            if(spokenText.includes('Hallo')){   // <-- HIER SOLL ANSTATT DAS WORT 'Hallo' einzelne Teile des oben ausgeklammerten Arrays rein.
                                 response = 'Hallo Tim, wie geht es Dir?'
                             } else{
-                                // speech.stop();
                                 response = 'Ich verstehe Dich nicht.'
                             }
                             speak.innerHTML = response;
