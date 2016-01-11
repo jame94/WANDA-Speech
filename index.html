@@ -5,13 +5,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="speech.js"></script>
         
-        <!-- Web Component's for Speaking Wanda-->
-        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+        <!-- jQuery  - http://code.jquery.com-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
         <!-- Importing Custom Elements -->
         <link rel="import" href="src/voice-player.html">
         <link rel="import" href="src/voice-recognition.html">
-        
+
         <style>
             * {
                 font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -46,6 +46,7 @@
     </head>
     
     <body>
+    
         <div id="wrapper">
              <div id="content">
                 <h2 id="speechToText">…</h2> <!-- Listen and show text from user -->
@@ -54,19 +55,85 @@
                           
                 <!-- SpeechRecognition and Answering -->
                 <script type="text/javascript">
-                    var speak = document.getElementById('textToSpeech')
+                    var spokenText = document.getElementById('textToSpeech')
                     var speech = new Speech({
                         debugging: true,
                         continuous: true,
                         interimResults: true,
                         autoRestart: true
                     })
-                    /*var welcome = ["Hallo", "Hey", "Hi", "Servus", "Gude", "Grüßgott"];
-                        welcome.forEach(function(welcomeElement) { 
-                            return welcomeElement;
-                        });*/
- 
-                    speech
+                    
+                    
+/*  // MAX //                 
+also du könntest es als datenbank lösen und halt direkt per array machen.
+wenn du es mit einer datenbank machst würde ich so vorgehen, dass du eine datenbank erstellst, dort eine tabelle erstellst mit drei spalten, so ungefähr: id, auszufuehrenderBefehl und ausloeser.
+wenn du dann also checken willst was mit dem aufgenommenen text angestellt werden soll suchst du sozusagen dann in ausloeser nach dem aufgenommenen text und schaust was für ein auszufuehrenderBefehl zugeordnet ist und machst das dann
+
+also als beispiel
+id: 2, auszufuehrenderBefehl: begruessung, ausloeser, hallo
+id: 3, auszufuehrenderBefehl: begruessung, ausloeser, guten tag
+id: 4, auszufuehrenderBefehl: begruessung, ausloeser, grüßgott
+id: 5, auszufuehrenderBefehl: begruessung, ausloeser, moin
+
+
+und den aufgenommenen text würde ich in ein array aufteilen, jeder eintrag ein wort z.b so:
+*/  
+function hello(){
+var sayHello = ["Hallo Tim schön dass du hier bist.", "Hey Tim.", "Hi Tim ich hoffe Dir geht es gut!", "Servus Tim.", "Gude was kann ich für Dich tun Tim?"];
+var text = Math.random( 0, (sayHello.length-1) );
+text = sayHello [ text ];
+    
+return text;
+}                   
+                             
+                    
+  speech
+    .on('start', function () {
+        spokenText.innerHTML = 'Ich bin bereit.'
+    })
+    .on('end', function () {
+        spokenText.innerHTML = 'Ich bin noch nicht bereit'
+    })
+    
+    .on('interimResult', function (msg) {
+        var spokenText = msg
+        speechToText.innerHTML = msg
+     })
+    
+    .on('finalResult', function (msg) {
+        var spokenText = msg
+        var response;
+        speechToText.innerHTML = msg
+        
+                
+         // Gesprochener Text wird als text definiert.
+        var array = spokenText.split(" ") // Dieser Split unterteilt Wörter mit Leerzeichen
+        console.log(array); // Console zeigt: [0] => 1. Wort von textToSpeech, [1] => 2. Wort von textToSpeech, [2] => 3. Wort von textToSpeech, …
+        
+        // db-Aufbau:  id, attention, action
+        for(var i=0; i<array.length; i++){
+            var element = array[i]; // element ist jeweils ein Wort aus textToSpeech
+            var ergebnis = $.get('/process.php?anfrage=' + element);
+        }
+
+        switch(ergebnis) {
+            case ('sayHelloWanda'):
+                response = hello();
+                break;
+
+        };      
+        
+        
+        spokenText.innerHTML = response;
+        var player = document.querySelector('#player-element');
+        player.setAttribute('text', response);
+        player.speak();
+    })
+                    
+.start();
+                             
+                    // oldSpeech.on - Function Test
+                    /*speech                                            
                         .on('start', function () {
                             speak.innerHTML = 'Bitte sprich mit mir'
                         })
@@ -76,7 +143,7 @@
                         .on('interimResult', function (msg) {
                             var spokenText = msg
                             speechToText.innerHTML = msg
-                            if(spokenText.includes('Hallo')){
+                            if(spokenText.includes(array)){
                                 speak.innerHTML = 'Hallo Tim, wie geht es Dir?'
                             } else{
                                 speak.innerHTML = 'Ich verstehe Dich nicht.'
@@ -86,7 +153,7 @@
                             var spokenText = msg
                             var response;
                             speechToText.innerHTML = msg
-                            if(spokenText.includes('Hallo')){   // <-- HIER SOLL ANSTATT DAS WORT 'Hallo' einzelne Teile des oben ausgeklammerten Arrays rein.
+                            if(spokenText.includes(array)){   // <-- HIER SOLL ANSTATT DAS WORT 'Hallo' einzelne Teile des oben ausgeklammerten Arrays rein.
                                 response = 'Hallo Tim, wie geht es Dir?'
                             } else{
                                 response = 'Ich verstehe Dich nicht.'
@@ -96,8 +163,9 @@
                             player.setAttribute('text', response);
                             player.speak();
                         })
-                        .start();
-      
+                    
+                        .start();*/
+                    
                 </script>
             </div>
         </div>
