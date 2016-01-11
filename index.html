@@ -62,22 +62,7 @@
                         interimResults: true,
                         autoRestart: true
                     })
-                    
-                    
-/*  // MAX //                 
-also du könntest es als datenbank lösen und halt direkt per array machen.
-wenn du es mit einer datenbank machst würde ich so vorgehen, dass du eine datenbank erstellst, dort eine tabelle erstellst mit drei spalten, so ungefähr: id, auszufuehrenderBefehl und ausloeser.
-wenn du dann also checken willst was mit dem aufgenommenen text angestellt werden soll suchst du sozusagen dann in ausloeser nach dem aufgenommenen text und schaust was für ein auszufuehrenderBefehl zugeordnet ist und machst das dann
 
-also als beispiel
-id: 2, auszufuehrenderBefehl: begruessung, ausloeser, hallo
-id: 3, auszufuehrenderBefehl: begruessung, ausloeser, guten tag
-id: 4, auszufuehrenderBefehl: begruessung, ausloeser, grüßgott
-id: 5, auszufuehrenderBefehl: begruessung, ausloeser, moin
-
-
-und den aufgenommenen text würde ich in ein array aufteilen, jeder eintrag ein wort z.b so:
-*/  
 function hello(){
 var sayHello = ["Hallo Tim schön dass du hier bist.", "Hey Tim.", "Hi Tim ich hoffe Dir geht es gut!", "Servus Tim.", "Gude was kann ich für Dich tun Tim?"];
 var text = Math.random( 0, (sayHello.length-1) );
