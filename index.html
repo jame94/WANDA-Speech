@@ -64,13 +64,16 @@
                     })
 
 function hello(){
-var sayHello = ["Hallo Tim schön dass du hier bist.", "Hey Tim.", "Hi Tim ich hoffe Dir geht es gut!", "Servus Tim.", "Gude was kann ich für Dich tun Tim?"];
-var text = Math.random( 0, (sayHello.length-1) );
-text = sayHello [ text ];
-    
-return text;
-}                   
-                             
+
+    var sayHello = ["Hallo Tim schön dass du hier bist.", "Hey Tim.", "Hi Tim ich hoffe Dir geht es gut!", "Servus Tim.", "Gude was kann ich für Dich tun Tim?"];
+
+    var text = Math.floor(Math.random()* (sayHello.length-1) );
+    console.log(text);
+    text = sayHello [ text ];
+
+    return text;
+}
+                         
                     
   speech
     .on('start', function () {
@@ -98,21 +101,26 @@ return text;
         // db-Aufbau:  id, attention, action
         for(var i=0; i<array.length; i++){
             var element = array[i]; // element ist jeweils ein Wort aus textToSpeech
-            var ergebnis = $.get('/process.php?anfrage=' + element);
-        }
-
+            var ergebnis = $.get('/process.php?anfrage=' + element, function(data){
+            ergebnis=data;
+            
         switch(ergebnis) {
             case ('sayHelloWanda'):
                 response = hello();
+                spokenText.innerHTML = response;
+                var player = document.querySelector('#player-element');
+                player.setAttribute('text', response);
+                player.speak();
+                console.log(response);
                 break;
-
         };      
         
         
-        spokenText.innerHTML = response;
-        var player = document.querySelector('#player-element');
-        player.setAttribute('text', response);
-        player.speak();
+            });
+        }
+
+
+        
     })
                     
 .start();
