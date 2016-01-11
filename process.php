@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 
 include('database.php');
 
-$DATABASE = new Database("db12483686-ad2", "PASSWORT", "dbu12483686-wanda", "localhost"); //WP282.WEBPACK.HOSTEUROPE.DE
+$DATABASE = new Database("USER", "PASS", "dbu12483686-wanda", "localhost"); //WP282.WEBPACK.HOSTEUROPE.DE
 
 $anfrage = $_GET['anfrage'];
 
