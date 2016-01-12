@@ -21,7 +21,7 @@ class Database
   private $result = NULL;
 
 
-  public function __construct($host = "localhost", $user = "dbu12483686-admin", $pass = "rn3xfyfjJV4Mgq3", $db = "dbu12483686-maindata")
+  public function __construct($host = "localhost", $user = "dbu12483686-admin", $pass = "PASS", $db = "dbu12483686-maindata")
   {
     $connection = mysql_connect($host,$user,$pass) or die("### Connection could not be established! ###");
     mysql_select_db($db) or die("### Database could not be selected! ###".mysql_error());
