@@ -1,10 +1,12 @@
-                    var spokenText = document.getElementById('textToSpeech')
-                    var speech = new Speech({
-                        debugging: true,
-                        continuous: true,
-                        interimResults: true,
-                        autoRestart: true
-                    })
+(function(){
+
+var spokenText = document.getElementById('textToSpeech')
+var speech = new Speech({
+    debugging: true,
+    continuous: true,
+    interimResults: true,
+    autoRestart: true
+})
 
 function hello(){
     var sayHello = ["Hallo Tim schön dass du hier bist. Darf ich Dir einen Vorschlag machen? ", 
@@ -145,3 +147,6 @@ function motherJokes(){
         })
                     
 .start();
+    
+     
+}());
