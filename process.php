@@ -1,7 +1,7 @@
 <?php 
 
 // 1. Create a database connection
-$connection = mysqli_connect("localhost","db12483686-admin","mNQgb44yt7h7tT27");
+$connection = mysqli_connect("localhost","db12483686-admin","PASS");
     if (!$connection) {
         die("Database connection failed: " . mysqli_error());
     } 
