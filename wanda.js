@@ -10,9 +10,13 @@ var speech = new Speech({
 
 
 function hello(){
-    var sayHello = ["Servus Tim, möchtest Du etwas Neues erleben?", 
-                    "Hey Tim. Hast Du Lust etwas zu unternehmen?", 
-                    "Hallo Tim, ich habe ein neues Abenteuer für Dich. Bist Du interessiert?"];
+    var sayHello = [
+        "Servus Tim, möchtest Du etwas Neues erleben?", 
+        "Hey Tim. Hast Du Lust etwas zu unternehmen?", 
+        "Gude Tim. Ich habe eine Idee. Möchtest du sie hören?",
+        "Hallo Tim, ich habe ein neues Abenteuer für Dich. Hast Du Lust?"
+        ];
+    
     var text = Math.floor(Math.random()* (sayHello.length) );
     console.log(text);
     text = sayHello [ text ];
@@ -21,33 +25,53 @@ function hello(){
 } 
     
                     
-function maybeLater(){
-    var sayOkBye = ["Schade. Für ein neues Erlebnis bitte mich einfach um einen neuen Vorschlag. Bis bald.", 
-                    "Für ein neues Erlebnis bitte mich einfach um einen neuen Vorschlag. Bis später Tim.", 
-                    "Schön. Für ein neues Erlebnis bitte mich einfach um einen neuen Vorschlag. Tschüss Tim.", 
-                    "Aktiviere mich, wenn es Dir langweilig wird. Für ein neues Erlebnis bitte mich einfach um einen neuen Vorschlag."];
-    var text = Math.floor(Math.random()* (sayOkBye.length) );
+function acceptProposal(){
+    var acception = [
+        "Vielen Dank! Ich wünsche Dir viel Spaß!", 
+        "Dann bis später Tim. Los gehts!", 
+        "Dafür bin ich da. Viel Spaß!",
+        "Ich freu mich auf deine Erlebnisse. Bis dann."
+        ];
+    
+    var text = Math.floor(Math.random()* (acception.length) );
     console.log(text);
-    text = sayOkBye [ text ];
+    text = acception [ text ];
 
     return text;
 } 
     
-                    
-function proposal(){
-    var giveProposal = [
-                    "Die Zugspitze ist ganz in deiner Nähe.     Wie wäre es auf dem höchsten Berg Deutschlands zu stehen und auf ein Meer von weiß bedeckten Bergspitzen zu schauen?",
-                    "Du befindest dich gerade am Bodensee. Könntest Du dir vorstellen mit einem Ruderboot von Meersburg aus den Bodensee zu überqueren?", 
-                    "Willkommen in Zürich. Falls Du Dich nicht durch den Lärm der Stadt kämpfen möchtest könntest Du in das Züricher Thermalbad und Spa gehen. "
-                    "In der Nähe von Pontaliee gibt es die Gouffree dee Poudreeie. Dies ist eine rießige Höhle, die du auf eigene Faust entdecken könntest.", 
-                    "Schön dich zu hören. In der Nähe der Cathedrale Saint-Benigne von Dijon gibt es ein Restaurant namens Schapo Ruusch indem Du dich den Köstlichkeiten von Frankreich widmen kannst."];
-    var text = Math.floor(Math.random()* (giveProposal.length) );
+    
+function record(){
+    var recordTim = [
+        "Das freut mich. Erzähle mir mehr davon, Tim.", 
+        "Ich möchte diese Erinnerungen für dich aufbewahren. Erzähle mir von deinen Erlebnissen.", 
+        "Berichte mir was du erlebt hast.",
+        "Wie war es? Kannst du mir es erzählen?",
+        "Schön. Beschreibe mir wie es für dich war?",
+        "Wie hast du dich bei diesem Erlebnis gefühlt, Tim?"
+        ];
+    
+    var text = Math.floor(Math.random()* (recordTim.length) );
     console.log(text);
-    text = giveProposal [text];
+    text = recordTim [ text ];
 
     return text;
 } 
-                    
+    
+                        
+function closeWanda(){
+    var bye = [
+        "Bis zum nächsten Mal Tim", 
+        "Ok, bis später.", 
+        "Ich freue mich wenn ich dir wieder helfen kann. Tschüss Tim"
+        ];
+    
+    var text = Math.floor(Math.random()* (bye.length) );
+    console.log(text);
+    text = bye [ text ];
+
+    return text;
+} 
 
     
     
@@ -123,8 +147,35 @@ speech
                             console.log(response);
                             break;
 
-                        case ('wantProposal'):
-                            response = proposal();
+                        case ('firstProposal'):
+                            var response = "Die Zugspitze befindet sich südöstlich von München. Würdest du gerne auf dem höchsten Berg Deutschlands stehen                               und auf ein Meer von weiß bedeckten Bergspitzen schauen?";
+                            spokenText.innerHTML = response;
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
+                            console.log(response);
+                            break;
+                            
+                        case ('secondProposal'):
+                            var response = "Du befindest dich gerade am Bodensee. Könntest Du dir vorstellen mit einem Ruderboot                                                         von Meersburg aus den Bodensee zu überqueren?";
+                            spokenText.innerHTML = response;
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
+                            console.log(response);
+                            break;
+                            
+                        case ('thirdProposal'):
+                            var response = "Zuerst: Willkommen in Zürich. Falls Du Dich nicht durch den Lärm der Stadt kämpfen möchtest                                                   könntest Du in das Züricher Thermalbad und Spa gehen.";
+                            spokenText.innerHTML = response;
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
+                            console.log(response);
+                            break;
+                            
+                        case ('fourthProposal'):
+                            var response = "In der Nähe von Pontaliee gibt es eine rießige Höhle, die du auf eigene Faust entdecken könntest.";
                             spokenText.innerHTML = response;
                             var player = document.querySelector('#player-element');
                             player.setAttribute('text', response);
@@ -132,8 +183,36 @@ speech
                             console.log(response);
                             break;
 
-                        case ('noProposal'):
-                            response = maybeLater();
+                        case ('fifthProposal'):
+                            var response = "In der Nähe der Cathedrale Saint-Benigne von Dijon gibt es ein Restaurant namens Schapo Ruusch indem Du dich den                             Köstlichkeiten von Frankreich widmen kannst.";
+                            spokenText.innerHTML = response;
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
+                            console.log(response);
+                            break;
+                            
+                            
+                        case ('acceptWanda'):
+                            response = acceptProposal();
+                            spokenText.innerHTML = response;
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
+                            console.log(response);
+                            break;
+                            
+                        case ('wandaRecord'):
+                            response = record();
+                            spokenText.innerHTML = response;
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
+                            console.log(response);
+                            break;
+                            
+                        case ('sayByeWanda'):
+                            response = closeWanda();
                             spokenText.innerHTML = response;
                             var player = document.querySelector('#player-element');
                             player.setAttribute('text', response);
