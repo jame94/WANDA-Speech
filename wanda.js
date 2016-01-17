@@ -8,45 +8,52 @@ var speech = new Speech({
     autoRestart: true
 })
 
+
 function hello(){
-    var sayHello = ["Hallo Tim schön dass du hier bist. Darf ich Dir einen Vorschlag machen? ", 
+    var sayHello = ["Servus Tim, möchtest Du etwas Neues erleben?", 
                     "Hey Tim. Hast Du Lust etwas zu unternehmen?", 
-                    "Hi Tim ich hoffe Dir geht es gut! Wie wäre es mit einem Vorschlag?", 
-                    "Servus Tim. Möchtest Du etwas unternehmen?", 
-                    "Gude, möchtest Du etwas Neues erleben Tim?"];
+                    "Hallo Tim, ich habe ein neues Abenteuer für Dich. Bist Du interessiert?"];
     var text = Math.floor(Math.random()* (sayHello.length) );
     console.log(text);
     text = sayHello [ text ];
 
     return text;
-}     
+} 
+    
                     
 function maybeLater(){
     var sayOkBye = ["Schade. Für ein neues Erlebnis bitte mich einfach um einen neuen Vorschlag. Bis bald.", 
                     "Für ein neues Erlebnis bitte mich einfach um einen neuen Vorschlag. Bis später Tim.", 
                     "Schön. Für ein neues Erlebnis bitte mich einfach um einen neuen Vorschlag. Tschüss Tim.", 
                     "Aktiviere mich, wenn es Dir langweilig wird. Für ein neues Erlebnis bitte mich einfach um einen neuen Vorschlag."];
-    var text = Math.floor(Math.random()* (maybeLater.length) );
+    var text = Math.floor(Math.random()* (sayOkBye.length) );
     console.log(text);
     text = sayOkBye [ text ];
 
     return text;
 } 
+    
                     
 function proposal(){
-    var giveProposal = ["Könntest Du dir vorstellen mit einem Sportflugzeug zu fliegen und dabei den Sonnenuntergang dabei zu genießen?", 
-                    "Bist Du jemals bei Nacht gewandert und hast am Tag geschlafen?", 
-                    "Wie wäre es mit einem Wellnessabend? Vielleicht gibt es in der Nähe etwas passendes für Dich.", 
-                    "Du könntest auf den nächstgelegenen Hügel oder Berg steigen und die Aussicht genießen."];
+    var giveProposal = [
+                    "Die Zugspitze ist ganz in deiner Nähe.     Wie wäre es auf dem höchsten Berg Deutschlands zu stehen und auf ein Meer von weiß bedeckten Bergspitzen zu schauen?",
+                    "Du befindest dich gerade am Bodensee. Könntest Du dir vorstellen mit einem Ruderboot von Meersburg aus den Bodensee zu überqueren?", 
+                    "Willkommen in Zürich. Falls Du Dich nicht durch den Lärm der Stadt kämpfen möchtest könntest Du in das Züricher Thermalbad und Spa gehen. "
+                    "In der Nähe von Pontaliee gibt es die Gouffree dee Poudreeie. Dies ist eine rießige Höhle, die du auf eigene Faust entdecken könntest.", 
+                    "Schön dich zu hören. In der Nähe der Cathedrale Saint-Benigne von Dijon gibt es ein Restaurant namens Schapo Ruusch indem Du dich den Köstlichkeiten von Frankreich widmen kannst."];
     var text = Math.floor(Math.random()* (giveProposal.length) );
     console.log(text);
-    text = giveProposal [ text ];
+    text = giveProposal [text];
 
     return text;
 } 
                     
 
-function motherJokes(){
+    
+    
+    
+//***************** for debugging *****************// 
+/*function motherJokes(){
     var yourMum = ["Deine Mutter ist so fett, die piept beim Rückwärtsgehen.", 
                     "Deine Mutter erkennt Geschlechtskrankheiten am Geschmack.", 
                     "Deine Mudda heißt Dieter und ist der Haarigste im Zoo", 
@@ -61,29 +68,32 @@ function motherJokes(){
                     "Als deine Mutter nach Tschernobyl gezogen ist, sind dann auch die letzten Menschen weggezogen.",
                     "Deine Mudda ist so fett, sie hat am linken und rechten Handgelenkt eine Uhr, weil sie in zwei Zeitzonen steht.",
                     "Deine Mudda hat Beine wie ein Reh. Zwar nicht so dünn aber genauso behaart.",
-                    "Deine Mutter besorgt sich ihre Tampons beim Dänischen Bettenlager."];
-    var text = Math.floor(Math.random()* (yourMum .length) );
+                    "Deine Mutter besorgt sich ihre Tampons beim Dänischen Bettenlager.",
+                    "Deine Mutter ist dein Vater und dein Stammbaum ein Kreis."];
+    var text = Math.floor(Math.random()* (yourMum.length) );
     console.log(text);
-    text = yourMum  [ text ];
+    text = giveProposal [text];
 
     return text;
-} 
-                         
+}
+
+*/
+    
+
+    
                     
-  speech
+speech
     .on('start', function () {
         spokenText.innerHTML = 'Ich bin Wanda. Du kannst mit mir sprechen.'
     })
     .on('end', function () {
         spokenText.innerHTML = 'Irgendetwas stimmt mit mir nicht - Schaue später nochmal vorbei.'
     })
-    
     .on('interimResult', function (msg) {
         var spokenText = msg
         speechToText.innerHTML = msg
         spokenText.innerHTML = 'Ich höre Dir zu.'
      })
-    
     .on('finalResult', function (msg) {
         var spokenText = msg
         var response;
@@ -97,56 +107,57 @@ function motherJokes(){
         // db-Aufbau:  id, attention, action
         for(var i=0; i<array.length; i++){
             var element = array[i]; // element ist jeweils ein Wort aus textToSpeech
-            var ergebnis = $.get('/process.php?anfrage=' + element, function(data){
-            ergebnis = data;
-
+                var ergebnis = $.get('/process.php?anfrage=' + element, function(data){
+                ergebnis = data;
+        
+       
             
-                // switch für die action aus der Datenbank
-                switch(ergebnis) {
-                    case ('sayHelloWanda'):
-                        response = hello();
-                        spokenText.innerHTML = response;
-                        var player = document.querySelector('#player-element');
-                        player.setAttribute('text', response);
-                        player.speak();
-                        console.log(response);
-                        break;
-                        
-                    case ('wantProposal'):
-                        response = proposal();
-                        spokenText.innerHTML = response;
-                        var player = document.querySelector('#player-element');
-                        player.setAttribute('text', response);
-                        player.speak();
-                        console.log(response);
-                        break;
-                        
-                    case ('noProposal'):
-                        response = maybeLater();
-                        spokenText.innerHTML = response;
-                        var player = document.querySelector('#player-element');
-                        player.setAttribute('text', response);
-                        player.speak();
-                        console.log(response);
-                        break;
-                        
-                    case ('yourMom'):
-                        response = motherJokes();
-                        spokenText.innerHTML = response;
-                        var player = document.querySelector('#player-element');
-                        player.setAttribute('text', response);
-                        player.speak();
-                        console.log(response);
-                        break; 
-                };      
-            });
-        }
+                    // switch für die action aus der Datenbank
+                    switch(ergebnis) {
+                        case ('sayHelloWanda'):
+                            response = hello();
+                            spokenText.innerHTML = response;
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
+                            console.log(response);
+                            break;
+
+                        case ('wantProposal'):
+                            response = proposal();
+                            spokenText.innerHTML = response;
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
+                            console.log(response);
+                            break;
+
+                        case ('noProposal'):
+                            response = maybeLater();
+                            spokenText.innerHTML = response;
+                            var player = document.querySelector('#player-element');
+                            player.setAttribute('text', response);
+                            player.speak();
+                            console.log(response);
+                            break;
+
+//                        case ('yourMom'):
+//                            response = motherJokes();
+//                            spokenText.innerHTML = response;
+//                            var player = document.querySelector('#player-element');
+//                            player.setAttribute('text', cresponse);
+//                            player.speak();
+//                            console.log(response);
+//                            break; 
+                    };      
+                });
+            }
 
 
         
         })
                     
-.start();
+    .start();
     
      
 }());

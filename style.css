@@ -1,29 +1,30 @@
-            * {
-                font-family: 'Helvetica Neue', Arial, sans-serif;
-                letter-spacing: -.1vh;
-            }
-            body {
-                width: 100%;
-                heigt: auto;
-                font-size: 3vh;
-            }
+* {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -.1vh;
+}
+
+body {
+    width: 100%;
+    heigt: auto;
+    font-size: 3vh;
+}
              
-            #wrapper {
-                position:absolute; 
-                width: 70%;
-                top: 35vh;
-                left: 15%; 
-                margin: 0 auto;
-                text-align: center;
-            }
+#wrapper {
+    position:absolute; 
+    width: 70%;
+    top: 35vh;
+    left: 15%; 
+    margin: 0 auto;
+    text-align: center;
+}
+        
+#text {
+    text-align: center;
+    font-size: 8vh;
+    font-weight: bold;
+    color: #454545;
+}
             
-            #text {
-                text-align: center;
-                font-size: 8vh;
-                font-weight: bold;
-                color: #454545;
-            }
-            
-            .example {
-                top: 2.5vh;
-            }
+.example {
+        top: 2.5vh;
+}
