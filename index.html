@@ -1,177 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Wanda</title>
-    <!-- IMPORT FONTS -->
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/google.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Importing Web Component's Polyfill -->
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-
-    <!-- Importing Custom Elements -->
-    <link rel="import" href="src/voice-player.html">
-    <link rel="import" href="src/voice-recognition.html">
-      
-    <script src="//www.google.com/js/gweb/analytics/autotrack.js"></script>
-      
-  </head>
-
-  <body>
-    <div id="wrapper">
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-      <!-- Support Warning -->
-      <div class="brower-support">
-          <p>Es tut uns leid, Du benötigst  <a href="https://www.google.de/chrome/browser/desktop/"> Chrome </a> um <h1>Wanda</h1> zu aktivieren.</p>
-      </div>
-
-      
-      <div id="container">
-          <h1> Hallo, ich bin Wanda!</h1>
-          
-            <!-- Sprachausgabe -->
-            <voice-player accent="de-DE" id="player-element" text=""></voice-player>
-                
-            <script>
-                window.addEventListener('WebComponentsReady', function(e) {
-                    var form = document.querySelector('#player-form'),
-                        input = document.querySelector('#player-input'),
-                        element = document.querySelector('#player-element');
-
-                    element.setAttribute('text', input.value);
-
-                    input.addEventListener('input', function(e) {
-                        element.setAttribute('text', input.value);
-                    });
-
-                    form.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        element.speak();
-                    });
-                });
-            </script>
-
-                <div class="example">
-                    <form id="player-form" class="pure-form">
-                        <fieldset>
-                            <input id="player-input" type="text" value="Text eingeben">
-                            <button id="player-submit">Sprachausgabe</button>
-                        </fieldset>
-                    </form>
-                </div>
-
-            <!-- Google Speech API - HTML -->
-            <h1 class="center" id="headline">Spracherkennung</h1>
-            <button id="start_button" class="button" onclick="startButton(event)">Aufnahme starten/stoppen</button>
-            <div id="info">
-              <!-- <p id="info_start">Click on the microphone icon and begin speaking.</p>
-              <p id="info_speak_now">Speak now.</p>
-              <p id="info_no_speech">No speech was detected. You may need to adjust your
-                <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
-                  microphone settings</a>.</p>
-              <p id="info_no_microphone" style="display:none">
-                No microphone was found. Ensure that a microphone is installed and that
-                <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
-                microphone settings</a> are configured correctly.</p>
-              <p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
-              <p id="info_denied">Permission to use microphone was denied.</p>
-              <p id="info_blocked">Permission to use microphone is blocked. To change,
-                go to chrome://settings/contentExceptions#media-stream</p>
-              <p id="info_upgrade">Web Speech API is not supported by this browser.
-                 Upgrade to <a href="//www.google.com/chrome">Chrome</a>
-                 version 25 or later.</p>-->
-            </div> 
-            <!-- <div class="right">
-              <button id="start_button" class="button" onclick="startButton(event)"></button>
-                <img id="start_img" src="mic.gif" alt="Start"></button>
-            </div> -->
-            <div id="results">
-              <span id="final_span" class="final"></span>
-              <span id="interim_span" class="interim"></span>
-              <p>
+        <!-- Speech.js von Google -->
+        <script script type="text/javascript" language="JavaScript" src="speech.js"></script>
+       
+        <!-- Style der Website -->
+        <link rel="stylesheet" href="style.css">
+        
+        <!-- jQuery  - http://code.jquery.com-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        
+        
+        <!-- Importing Custom Elements -->
+        <link rel="import" href="src/voice-player.html">
+        <link rel="import" href="src/voice-recognition.html">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+                <h2 id="speechToText">…</h2> <!-- Listen and show text from user -->
+                <form id="textToSpeech"> </form> <!-- Get words by JavaScript -->
+                <voice-player id="player-element" text=""></voice-player>
+                <script script type="text/javascript" language="JavaScript" src="wanda.js"></script>
             </div>
-            <div class="center">
-              <!-- <div class="sidebyside" style="text-align:right">
-                <button id="copy_button" class="button" onclick="copyButton()">
-                  Copy and Paste</button>
-                <div id="copy_info" class="info">
-                  Press Control-C to copy text.<br>(Command-C on Mac.)
-                </div>
-              </div>
-              <div class="sidebyside">
-                <button id="email_button" class="button" onclick="emailButton()">
-                  Create Email</button>
-                <div id="email_info" class="info">
-                  Text sent to default email application.<br>
-                  (See chrome://settings/handlers to change.)
-                </div>
-              </div>
-              <p> -->
-              <div id="div_language">
-                <select id="select_language" onchange="updateCountry()"></select>
-                &nbsp;&nbsp;
-                <select id="select_dialect"></select>
-              </div> 
-            </div> 
-            
-            <!-- Spracherkennung -- sehr lange Dauer!!!
-        <voice-recognition id="recognition-element"></voice-recognition>
-            
-            <script>
-                window.addEventListener('WebComponentsReady', function(e) {
-                    var form = document.querySelector('#recognition-form'),
-                        input = document.querySelector('#recognition-input'),
-                        element = document.querySelector('#recognition-element');
-
-                    form.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        element.start();
-                    });
-
-                    element.addEventListener('result', function(e) {
-                        input.textContent = e.detail.result;
-                    });
-                });
-            </script>
-          
-            <script>
-            var recognizer = new SpeechRecognition();
-                recognizer.continuous = true;
-                recognizer.interimResults = true;
-                recognizer.onresult = function(e) {
-                  if (e.results.length) {
-                    var lastResultIdx = e.results.resultIndex;
-                    console.log(e.results[lastResultIdx][0].transcript);
-                  }
-                };
-                recognizer.start();
-            </script>
-
-
-                <div class="example">
-                    <form id="recognition-form">
-                        <fieldset>
-                            <textarea id="recognition-input" readonly></textarea>
-                        </fieldset>
-                        <fieldset>
-                            <button id="recognition-submit">Spracheingabe</button>
-                        </fieldset>
-                    </form>
-                </div>
-          </div>
-    </div> -->
-            
-    
-    <!-- Google Speech API -->
-    <script src="js/googleSpeech.js"></script>
-    
-    <!-- Browser - Support -->
-    <script src="js/support.js"></script>
-    
-  </body>
+        </div>
+    </body>
 </html>
